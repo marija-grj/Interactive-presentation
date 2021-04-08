@@ -1,0 +1,36 @@
+---
+title: "Interactive Covid-19 presentation"
+author: "Marija Grjazniha"
+date: "April 8, 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+library(plotly)
+library(dplyr)
+data <- read.csv("https://raw.githubusercontent.com/marija-grj/YACD/main/data/summary.csv")
+data <- data[data$Date<"2021-04-05",]
+data$Date <- as.Date(data$Date, "%Y-%m-%d")
+```
+
+
+## Confirmed Covid-19 cases per 100K population
+
+```{r}
+plot_ly(data, x=data$Date, y=data$ConfirmedCases_100K, color=data$Continent_Name, mode="line") %>% layout(hovermode = "x")
+```
+
+## Confirmed Covid-19 deaths per 100K population
+
+```{r}
+plot_ly(data, x=data$Date, y=data$ConfirmedDeaths_100K, color=data$Continent_Name, mode="line") %>% layout(hovermode = "x")
+```
+
+## Average Stringency Index
+
+```{r}
+plot_ly(data, x=data$Date, y=data$StringencyIndexForDisplay, color=data$Continent_Name, mode="line") %>%  layout(hovermode = "x")
+```
